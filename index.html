@@ -133,11 +133,15 @@
     .cursor-dot, .cursor-ring {
       position: fixed; top: 0; left: 0; pointer-events: none; border-radius: 50%;
       z-index: 10002; transform: translate(-50%, -50%);
+      display: none; opacity: 0; visibility: hidden;
     }
     .cursor-dot { width: 8px; height: 8px; background: var(--sage-green); }
     .cursor-ring {
       width: 38px; height: 38px; border: 1.5px solid var(--sky-blue);
       transition: transform 0.08s ease-out;
+    }
+    @media (hover: none), (pointer: coarse), (max-width: 1024px) {
+      .cursor-dot, .cursor-ring { display: none !important; opacity: 0 !important; visibility: hidden !important; }
     }
     @media (max-width: 768px) {
       .reel-grid, .cta-panel { box-shadow: 6px 6px 0 var(--shadow-hard); }
@@ -218,11 +222,7 @@
     }
     .text-sage { color: var(--sage-green); }
     .nb { white-space: nowrap; }
-    .text-under-blue { position: relative; display: inline-block; }
-    .text-under-blue::after {
-      content: ''; position: absolute; left: 0; bottom: 5px; width: 100%; height: 14px;
-      background: var(--sky-blue); opacity: 0.45; z-index: -1; border-radius: 4px;
-    }
+    .text-under-blue { position: relative; display: inline-block; color: var(--text-charcoal); }
     .hero-desc {
       margin-top: 24px; max-width: 630px; font-size: 1.12rem; line-height: 1.7; color: var(--text-muted);
     }
@@ -921,27 +921,71 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script>
-    // 1. Preloader
-    window.addEventListener('load', () => {
+    // 1. Preloader + entrance animations (do not wait for full media load)
+    const runIntro = () => {
       const fill = document.querySelector('.loader-fill');
       const pre = document.getElementById('preloader');
+      const hidePreloader = () => { if (pre) pre.style.display = 'none'; };
+      const initScrollAnimations = () => {
+        if (typeof ScrollTrigger === 'undefined' || typeof gsap === 'undefined') return;
+        ScrollTrigger.config({ ignoreMobileResize: true });
+        const reveal = (selector, trigger, stagger, y = 36) => {
+          const els = gsap.utils.toArray(selector);
+          if (!els.length) return;
+          if (ScrollTrigger.batch) {
+            ScrollTrigger.batch(els, {
+              start: 'top 88%',
+              once: true,
+              onEnter: batch => gsap.fromTo(batch,
+                { y, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.75, stagger: stagger, ease: 'power2.out', clearProps: 'transform,opacity', overwrite: true }
+              )
+            });
+          } else {
+            gsap.fromTo(els,
+              { y, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.75, stagger: stagger, ease: 'power2.out', clearProps: 'transform,opacity',
+                scrollTrigger: { trigger: trigger || els[0], start: 'top 88%', once: true }
+              }
+            );
+          }
+        };
+        reveal('.sec-header', null, 0.08, 28);
+        reveal('.reel-grid', '#reel', 0, 34);
+        reveal('.reveal-card', '.work-grid', 0.1, 45);
+        reveal('.service-card', '#services', 0.08, 34);
+        reveal('.cta-panel', '#contact', 0, 28);
+      };
+
       if (typeof gsap !== 'undefined') {
         if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
-        gsap.to(fill, { width: '100%', duration: 0.9, ease: 'power2.inOut' });
-        gsap.to(pre, { yPercent: -100, duration: 0.7, delay: 0.95, ease: 'power4.inOut', onComplete: () => pre.style.display = 'none' });
-        gsap.from('.gs-up', { y: 36, opacity: 0, duration: 0.85, stagger: 0.11, delay: 1.1, ease: 'power3.out' });
-        if (typeof ScrollTrigger !== 'undefined') {
-          gsap.from('.reveal-card', {
-            y: 45, opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power2.out',
-            clearProps: 'transform,opacity',
-            scrollTrigger: { trigger: '.work-grid', start: 'top 85%', once: true }
-          });
-        }
+        const tl = gsap.timeline();
+        tl.to(fill, { width: '100%', duration: 1.1, ease: 'power2.inOut' }, 0)
+          .to(pre, { yPercent: -100, duration: 0.75, ease: 'power4.inOut' }, 1.15)
+          .set(pre, { display: 'none' }, 1.95)
+          .fromTo('.gs-up', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out', clearProps: 'transform,opacity' }, 1.35)
+          .add(() => {
+            initScrollAnimations();
+            if (typeof ScrollTrigger !== 'undefined' && ScrollTrigger.refresh) ScrollTrigger.refresh();
+          }, 1.45);
       } else {
-        pre.style.display = 'none';
+        hidePreloader();
+        document.querySelectorAll('.gs-up').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
       }
-    });
-    setTimeout(() => { const p = document.getElementById('preloader'); if (p) p.style.display = 'none'; }, 3000);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', runIntro, { once: true });
+    } else {
+      runIntro();
+    }
+    setTimeout(() => {
+      const p = document.getElementById('preloader');
+      if (p && p.style.display !== 'none') {
+        p.style.display = 'none';
+        document.querySelectorAll('.gs-up').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+      }
+    }, 2800);
 
     // Production: media loads directly from assets/
 
@@ -1043,11 +1087,22 @@
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       const dot = document.querySelector('.cursor-dot');
       const ring = document.querySelector('.cursor-ring');
-      window.addEventListener('mousemove', e => {
+      let cursorShown = false;
+      const onPointerMove = (e) => {
+        if (e.pointerType && e.pointerType !== 'mouse') return;
+        if (!cursorShown) {
+          cursorShown = true;
+          dot.style.display = 'block';
+          ring.style.display = 'block';
+          dot.style.opacity = '1';
+          ring.style.opacity = '1';
+          dot.style.visibility = 'visible';
+          ring.style.visibility = 'visible';
+        }
         dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
         ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
-      });
-
+      };
+      window.addEventListener('pointermove', onPointerMove, { passive: true });
       function bindTilt(el, strength = 12) {
         if (!el) return;
         el.addEventListener('mousemove', e => {
