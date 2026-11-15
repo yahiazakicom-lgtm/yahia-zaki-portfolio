@@ -47,58 +47,11 @@
       --logo-ink: #F1F0EA;
     }
 
-    .yz-logo-wrap {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .yz-svg {
-      overflow: visible;
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .yz-shadow-layer {
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-      animation: yzShadowFloat 4s ease-in-out infinite;
-    }
-    .yz-code-left, .yz-code-right, .yz-code-slash, .yz-arrow-head, .yz-pen-group {
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-      transform-box: fill-box;
-      transform-origin: center;
-    }
-    .yz-draw {
-      stroke-dasharray: 420;
-      stroke-dashoffset: 420;
-      animation: yzDrawIn 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-    }
-    .yz-draw-delay { animation-delay: 0.35s; }
-    .yz-pop {
-      opacity: 0;
-      animation: yzPopIn 0.6s ease forwards 0.9s;
-    }
-    @keyframes yzDrawIn { to { stroke-dashoffset: 0; } }
-    @keyframes yzPopIn {
-      from { opacity: 0; transform: scale(0.7); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    @keyframes yzShadowFloat {
-      0%, 100% { transform: translate(0px, 0px); }
-      50% { transform: translate(2px, 2px); }
-    }
-    .yz-logo-wrap:hover .yz-shadow-layer { animation: none; transform: translate(5px, 5px); }
-    .yz-logo-wrap:hover .yz-code-left { transform: translateX(-3px); }
-    .yz-logo-wrap:hover .yz-code-right { transform: translateX(3px); }
-    .yz-logo-wrap:hover .yz-code-slash { transform: rotate(12deg) scale(1.1); }
-    .yz-logo-wrap:hover .yz-arrow-head { transform: translateX(5px); }
-    .yz-logo-wrap:hover .yz-pen-group { transform: translate(-2px, 2px) rotate(-2deg); }
-    .hero-logo-corner { position:absolute; top:100px; left:0; opacity:0.9; transform:scale(0.9); transform-origin:left top; }
-    @media (max-width: 900px) { .hero-logo-corner { display:none; } }
-
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     button, a, .work-card, .filter-btn, .yz-logo-wrap { user-select: none; -webkit-user-select: none; }
     :focus { outline: none; }
     :focus-visible { outline: 2px solid var(--sky-blue); outline-offset: 2px; }
+
     html {
       scroll-behavior: smooth;
       width: 100%;
@@ -119,6 +72,8 @@
     }
 
     main {
+      position: relative;
+      z-index: 2;
       width: 100%;
       max-width: 100%;
       overflow-x: clip;
@@ -130,6 +85,84 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
+    /* Animated SVG Logo */
+    .yz-logo-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .yz-svg {
+      overflow: visible;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .yz-shadow-layer {
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: yzShadowFloat 4s ease-in-out infinite;
+    }
+    .yz-code-left, .yz-code-right, .yz-code-slash, .yz-arrow-head, .yz-pen-group {
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .yz-draw {
+      stroke-dasharray: 420;
+      stroke-dashoffset: 420;
+      animation: yzDrawIn 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    }
+    .yz-draw-delay { animation-delay: 0.3s; }
+    .yz-pop {
+      opacity: 0;
+      animation: yzPopIn 0.55s ease forwards 0.8s;
+    }
+    @keyframes yzDrawIn { to { stroke-dashoffset: 0; } }
+    @keyframes yzPopIn {
+      from { opacity: 0; transform: scale(0.7); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes yzShadowFloat {
+      0%, 100% { transform: translate(0px, 0px); }
+      50% { transform: translate(2px, 2px); }
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .yz-logo-wrap:hover .yz-shadow-layer { animation: none; transform: translate(5px, 5px); }
+      .yz-logo-wrap:hover .yz-code-left { transform: translateX(-3px); }
+      .yz-logo-wrap:hover .yz-code-right { transform: translateX(3px); }
+      .yz-logo-wrap:hover .yz-code-slash { transform: rotate(12deg) scale(1.1); }
+      .yz-logo-wrap:hover .yz-arrow-head { transform: translateX(5px); }
+      .yz-logo-wrap:hover .yz-pen-group { transform: translate(-2px, 2px) rotate(-2deg); }
+    }
+
+    /* Preloader Curtain */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: #F1F0EA;
+      color: #41474C;
+      z-index: 10001;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      --logo-ink: #41474C;
+      --bg-paper: #F1F0EA;
+    }
+    .loader-track {
+      width: 210px;
+      height: 3px;
+      background: rgba(65, 71, 76, 0.14);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .loader-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #7C9373, #98C1E1);
+    }
+
+    /* Desktop-only Custom Cursor */
     .cursor-dot, .cursor-ring {
       position: fixed; top: 0; left: 0; pointer-events: none; border-radius: 50%;
       z-index: 10002; transform: translate(-50%, -50%);
@@ -143,20 +176,14 @@
     @media (hover: none), (pointer: coarse), (max-width: 1024px) {
       .cursor-dot, .cursor-ring { display: none !important; opacity: 0 !important; visibility: hidden !important; }
     }
-    @media (max-width: 768px) {
-      .reel-grid, .cta-panel { box-shadow: 6px 6px 0 var(--shadow-hard); }
-      .cta-panel { box-shadow: 6px 6px 0 var(--sage-green); }
-      .stats-strip { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-      .wa-float { bottom: 14px; right: 14px; padding: 10px 16px; }
-      .video-3d-frame { height: auto; aspect-ratio: auto; max-height: none; }
-      .video-3d-frame video { width: 100%; height: auto; object-fit: contain; }
-    }
 
+    /* Three.js Canvas */
     #webgl-bg {
       position: fixed; inset: 0; width: 100%; height: 100%;
       z-index: 0; pointer-events: none;
     }
 
+    /* Floating Navbar */
     nav {
       position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
       width: min(1200px, 92%); padding: 11px 22px;
@@ -168,14 +195,10 @@
       display: flex; align-items: center; gap: 10px; text-decoration: none;
       color: var(--text-charcoal); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
     }
-    .brand img { height: 30px; width: auto; border-radius: 6px; }
     .nav-brand-text { display: flex; flex-direction: column; line-height: 1.1; }
     .nav-links { display: flex; gap: 26px; list-style: none; }
     .nav-links a {
       text-decoration: none; color: var(--text-charcoal); font-size: 0.9rem; font-weight: 500; transition: color 0.25s;
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .nav-links a:hover { color: var(--sage-green); }
     }
     .nav-actions { display: flex; align-items: center; gap: 10px; }
     .btn-pill {
@@ -183,9 +206,6 @@
       font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.25s;
     }
     .btn-theme { background: transparent; border: 1px solid var(--border); color: var(--text-charcoal); }
-    @media (hover: hover) and (pointer: fine) {
-      .btn-theme:hover { border-color: var(--sage-green); color: var(--sage-green); }
-    }
     .btn-wa-nav { background: var(--sage-green); color: #fff; border: none; }
     .btn-icon-circle {
       width: 38px; height: 38px; padding: 0; border-radius: 50%;
@@ -194,15 +214,18 @@
       text-decoration: none; transition: all 0.25s;
     }
     @media (hover: hover) and (pointer: fine) {
+      .nav-links a:hover { color: var(--sage-green); }
+      .btn-theme:hover { border-color: var(--sage-green); color: var(--sage-green); }
+      .btn-wa-nav:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(124,147,115,0.35); }
       .btn-icon-circle:hover { border-color: var(--sage-green); color: var(--sage-green); background: rgba(124,147,115,0.08); }
     }
     @media (max-width: 820px) { .nav-links { display: none; } }
 
-    main { position: relative; z-index: 2; }
     .container { width: min(1200px, 90%); margin: 0 auto; }
 
+    /* Hero */
     .hero {
-      min-height: 92svh; display: flex; flex-direction: column; justify-content: center; padding: 112px 0 60px;
+      min-height: 92svh; display: flex; flex-direction: column; justify-content: center; padding: 118px 0 60px;
     }
     .status-pill {
       display: inline-flex; align-items: center; gap: 9px; width: fit-content;
@@ -218,11 +241,10 @@
 
     .hero h1 {
       font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 6.8vw, 5.2rem);
-      line-height: 1.02; font-weight: 800; letter-spacing: -0.02em; max-width: 930px;
+      line-height: 1.04; font-weight: 800; letter-spacing: -0.02em; max-width: 930px;
     }
     .text-sage { color: var(--sage-green); }
     .nb { white-space: nowrap; }
-    .text-under-blue { position: relative; display: inline-block; color: var(--text-charcoal); }
     .hero-desc {
       margin-top: 24px; max-width: 630px; font-size: 1.12rem; line-height: 1.7; color: var(--text-muted);
     }
@@ -232,14 +254,12 @@
       text-decoration: none; font-weight: 600; box-shadow: 6px 6px 0 var(--sky-blue);
       transition: transform 0.25s, box-shadow 0.25s; display: inline-flex; align-items: center; gap: 8px;
     }
-    @media (hover: hover) and (pointer: fine) {
-      .btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 9px 9px 0 var(--sky-blue); }
-    }
     .btn-outline {
       border: 1.5px solid var(--text-charcoal); color: var(--text-charcoal); padding: 15px 28px;
       border-radius: 999px; text-decoration: none; font-weight: 600; transition: all 0.25s;
     }
     @media (hover: hover) and (pointer: fine) {
+      .btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 9px 9px 0 var(--sky-blue); }
       .btn-outline:hover { background: var(--text-charcoal); color: var(--bg-paper); }
     }
 
@@ -250,6 +270,7 @@
     .stat-item h3 { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--sage-green); }
     .stat-item p { font-size: 0.88rem; color: var(--text-muted); margin-top: 4px; }
 
+    /* Marquee */
     .marquee-wrap {
       width: 100%; max-width: 100%; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
       padding: 18px 0; margin: 50px 0 90px; background: rgba(124,147,115,0.06);
@@ -270,6 +291,7 @@
     }
     .sec-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4.2vw, 3.2rem); font-weight: 800; }
 
+    /* Featured Commercial Reel */
     .reel-stage-section { margin-bottom: 110px; }
     .reel-grid {
       display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 38px; align-items: center;
@@ -296,25 +318,6 @@
       object-fit: contain !important;
       background: #000 !important;
     }
-    .video-fallback-note {
-      position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
-      justify-content: center; text-align: center; padding: 24px; color: #F1F0EA; gap: 14px;
-      background: radial-gradient(circle at center, #252b2f, #131618);
-      z-index: 4;
-    }
-
-    /* Quick Upload Picker Button */
-    .upload-pick-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--sage-green); color: #fff; padding: 10px 18px;
-      border-radius: 999px; font-size: 0.84rem; font-weight: 700;
-      cursor: pointer; border: 2px solid var(--sky-blue);
-      transition: transform 0.2s;
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .upload-pick-btn:hover { transform: scale(1.05); }
-    }
-    .upload-pick-btn input { display: none; }
 
     .reel-details h3 { font-family: 'Syne', sans-serif; font-size: 1.9rem; margin-bottom: 14px; }
     .reel-details p { color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
@@ -324,6 +327,7 @@
       border: 1px solid var(--border); background: var(--bg-paper);
     }
 
+    /* Portfolio Grid */
     .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; }
     .filter-btn {
       padding: 8px 18px; border-radius: 999px; border: 1px solid var(--border);
@@ -345,13 +349,6 @@
       transition: transform 0.18s ease, box-shadow 0.3s ease;
       display: flex; flex-direction: column; height: 100%;
     }
-    @media (hover: hover) and (pointer: fine) {
-      .work-card:hover { box-shadow: 10px 10px 0 var(--shadow-hard); }
-    }
-    @media (hover: hover) and (pointer: fine) and (max-width: 768px) {
-      .work-card:hover { box-shadow: 6px 6px 0 var(--shadow-hard); }
-    }
-
     .work-media {
       position: relative; height: 270px; border-radius: 16px; overflow: hidden;
       background: #1C2023; border: 1px solid var(--border);
@@ -360,6 +357,7 @@
       width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
     }
     @media (hover: hover) and (pointer: fine) {
+      .work-card:hover { box-shadow: 10px 10px 0 var(--shadow-hard); }
       .work-card:hover .work-media img { transform: scale(1.06); }
     }
 
@@ -369,11 +367,6 @@
       padding: 5px 12px; border-radius: 999px; font-size: 0.76rem; font-weight: 700;
       border: 1px solid var(--border);
     }
-    .media-placeholder-ui {
-      position: absolute; inset: 0; display: none; flex-direction: column; align-items: center;
-      justify-content: center; text-align: center; padding: 18px; color: #F1F0EA; gap: 12px;
-      background: linear-gradient(135deg, #252b2e, #171b1d); font-size: 0.85rem; z-index: 4;
-    }
     .work-body { margin-top: 18px; transform: translateZ(18px); flex: 1; display: flex; flex-direction: column; min-height: 0; }
     .work-body h3 { font-family: 'Syne', sans-serif; font-size: 1.32rem; margin-bottom: 8px; }
     .work-body p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.55; margin-bottom: 14px; overflow-wrap: anywhere; }
@@ -382,12 +375,14 @@
       display: inline-flex; align-items: center; gap: 6px;
     }
 
+    /* Arabic Bidirectional Fix */
     .work-body p, .service-card p, .hero-desc, .reel-details p, #modalDesc {
       direction: rtl;
       unicode-bidi: plaintext;
       text-align: right;
     }
 
+    /* Services */
     .services-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
       gap: 22px; margin-bottom: 110px;
@@ -403,6 +398,7 @@
     .service-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
     .service-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; }
 
+    /* Contact CTA */
     .cta-panel {
       background: var(--text-charcoal); color: var(--bg-paper);
       border-radius: 28px; padding: clamp(36px, 6vw, 72px); text-align: center;
@@ -418,18 +414,17 @@
       text-decoration: none; font-weight: 800; display: inline-flex; align-items: center; gap: 10px;
       transition: transform 0.25s;
     }
-    @media (hover: hover) and (pointer: fine) {
-      .cta-btn-wa:hover { transform: scale(1.05); }
-    }
     .cta-btn-ig {
       background: transparent; color: var(--bg-paper); padding: 15px 28px; border-radius: 999px;
       text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 10px;
       border: 1.5px solid rgba(241,240,234,0.4); transition: all 0.25s ease;
     }
     @media (hover: hover) and (pointer: fine) {
+      .cta-btn-wa:hover { transform: scale(1.05); }
       .cta-btn-ig:hover { background: var(--sage-green); border-color: var(--sage-green); color: #fff; transform: scale(1.03); }
     }
 
+    /* Floating WhatsApp */
     .wa-float {
       position: fixed; bottom: 26px; right: 26px; z-index: 90;
       background: var(--sage-green); color: #fff; padding: 12px 20px; border-radius: 999px;
@@ -441,6 +436,7 @@
       .wa-float:hover { transform: translate(-2px, -2px); }
     }
 
+    /* Lightbox Modal */
     .modal {
       position: fixed; inset: 0; background: rgba(15, 18, 20, 0.88); backdrop-filter: blur(10px);
       z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
@@ -461,7 +457,7 @@
       margin: 18px 0; border-radius: 16px; overflow: hidden; background: #131618;
       max-height: 480px; display: flex; align-items: center; justify-content: center;
     }
-    .modal-media-wrap img, .modal-media-wrap video {
+    .modal-media-wrap img {
       max-width: 100%; max-height: 460px; object-fit: contain;
     }
     .modal-media-wrap video {
@@ -479,15 +475,14 @@
     @media (hover: hover) and (pointer: fine) {
       .footer-links a:hover { color: var(--sage-green); }
     }
-    @media (max-width: 900px) { .hero-logo-corner { display:none; } }
 
+    /* Mobile Responsive Overrides */
     @media (max-width: 768px) {
-      .reel-grid, .cta-panel { box-shadow: 6px 6px 0 var(--shadow-hard); }
+      .reel-grid { box-shadow: 6px 6px 0 var(--shadow-hard); }
       .cta-panel { box-shadow: 6px 6px 0 var(--sage-green); }
-      .work-card:hover { box-shadow: 6px 6px 0 var(--shadow-hard); }
-      .stats-strip { grid-template-columns: repeat(2, 1fr); gap: 16px; }
       .wa-float { bottom: 14px; right: 14px; padding: 10px 16px; }
-      .video-3d-frame { max-height: none; }
+      .video-3d-frame { height: auto; aspect-ratio: auto; max-height: none; }
+      .video-3d-frame video { width: 100%; height: auto; object-fit: contain; }
     }
 
     @media (max-width: 640px) {
@@ -497,7 +492,7 @@
       .nav-brand-text span:first-child { font-size: 0.82rem; white-space: nowrap; }
       .brand-subtitle { display: none; }
       .nav-actions { gap: 6px; flex-shrink: 0; }
-      .nav-actions .btn-pill, .nav-actions .btn-theme, .nav-actions .btn-wa-nav {
+      .nav-actions .btn-pill, .nav-actions .btn-wa-nav {
         padding: 6px 11px; font-size: 0.75rem; white-space: nowrap;
       }
       .nav-actions .btn-icon-circle { width: 32px; height: 32px; }
@@ -510,17 +505,14 @@
         content: "◐"; font-size: 0.95rem; line-height: 1; color: var(--text-charcoal);
       }
       body.dark-cinema .nav-actions .btn-theme::before { content: "☀"; }
-      .work-grid { grid-template-columns: 1fr; }
+
       .hero { padding-top: 104px; }
       .hero h1 { font-size: clamp(1.95rem, 7.8vw, 2.5rem); line-height: 1.08; }
       .stats-strip { grid-template-columns: repeat(2, 1fr); gap: 18px 12px; }
       .stat-item { min-width: 0; }
       .stat-item h3 { font-size: clamp(1.35rem, 5.5vw, 1.7rem); line-height: 1.15; }
+      .work-grid { grid-template-columns: 1fr; }
       .modal-box { padding: 20px; }
-    }
-
-    @media (max-width: 440px) {
-      .nav-actions .btn-wa-nav { padding: 6px 10px; }
     }
   </style>
 </head>
@@ -530,10 +522,10 @@
   <div class="cursor-dot"></div>
   <div class="cursor-ring"></div>
 
-  <!-- Preloader -->
+  <!-- Preloader Curtain with Animated YZ Logo -->
   <div id="preloader">
-    <div class="yz-logo-wrap" style="gap:16px; flex-direction:column;">
-      <svg class="yz-svg" width="150" height="120" viewBox="0 0 185 145" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="yz-logo-wrap" style="gap:14px; flex-direction:column;">
+      <svg class="yz-svg" width="145" height="115" viewBox="0 0 185 145" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g class="yz-shadow-layer yz-pop" transform="translate(5,5)">
           <path d="M138 18 L156 18 L156 32 L114 96" stroke="var(--logo-blue)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M136 30 L92 98 L82 124 L106 110 L146 46" fill="var(--logo-blue)" opacity="0.7"/>
@@ -559,8 +551,8 @@
         </g>
       </svg>
     </div>
-    <div style="font-family:'Syne',sans-serif; font-weight:800; letter-spacing:0.18em; color:#41474C; font-size:0.9rem;">YAHIA ZAKI</div>
-    <div style="font-size:0.68rem; letter-spacing:0.22em; color:#676E74;">CREATIVE TECHNOLOGIST</div>
+    <div style="font-family:'Syne',sans-serif; font-weight:800; letter-spacing:0.18em; color:#41474C; font-size:0.95rem;">YAHIA ZAKI</div>
+    <div style="font-size:0.68rem; letter-spacing:0.22em; color:#676E74; font-weight:600;">CREATIVE TECHNOLOGIST</div>
     <div class="loader-track"><div class="loader-fill"></div></div>
   </div>
 
@@ -569,24 +561,19 @@
   <nav>
     <a href="#" class="brand yz-logo-wrap">
       <svg class="yz-svg" width="52" height="40" viewBox="0 0 185 145" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- 3D Sky Blue Offset Shadow Layer -->
         <g class="yz-shadow-layer yz-pop" transform="translate(5,5)">
           <path d="M138 18 L156 18 L156 32 L114 96" stroke="var(--logo-blue)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M136 30 L92 98 L82 124 L106 110 L146 46" fill="var(--logo-blue)" opacity="0.7"/>
           <polygon points="140,98 170,118 140,138" fill="var(--logo-blue)"/>
         </g>
-        <!-- Hollow Sage Green Y -->
         <path class="yz-draw" d="M20 18 L35 18 L61 57 L87 18 L102 18 L68 72 L68 124 L54 124 L54 72 Z" stroke="var(--logo-sage)" stroke-width="4.5" stroke-linejoin="round" fill="none"/>
-        <!-- Code Brackets </> inside Y -->
         <g class="yz-pop" stroke="var(--logo-sage)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
           <path class="yz-code-left" d="M51 22 L44 28 L51 34"/>
           <path class="yz-code-slash" d="M64 20 L58 36"/>
           <path class="yz-code-right" d="M71 22 L78 28 L71 34"/>
         </g>
-        <!-- Sage Green Z Frame & Bottom Track -->
         <path class="yz-draw yz-draw-delay" d="M107 18 L156 18 L156 31 L114 95" stroke="var(--logo-sage)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         <path class="yz-draw yz-draw-delay" d="M97 111 L138 111 M88 124 L138 124" stroke="var(--logo-sage)" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-        <!-- Charcoal Fountain Pen & Nib (Diagonal of Z) -->
         <g class="yz-pen-group yz-draw yz-draw-delay" stroke="var(--logo-ink)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
           <path d="M104 31 L138 31 L109 76 L94 67 Z"/>
           <path d="M92 70 L110 81 L106 87 L88 76 Z" fill="var(--logo-ink)"/>
@@ -594,7 +581,6 @@
           <line x1="80" y1="124" x2="92" y2="103"/>
           <circle cx="94" cy="100" r="2.5"/>
         </g>
-        <!-- Right-Pointing Arrowhead -->
         <g class="yz-arrow-head yz-pop">
           <polygon points="138,98 168,118 138,138" fill="var(--bg-paper, #F1F0EA)" stroke="var(--logo-ink)" stroke-width="4.2" stroke-linejoin="round"/>
         </g>
@@ -605,14 +591,14 @@
       </div>
     </a>
     <ul class="nav-links">
-      <li><a href="#reel"><span dir="ltr" style="display:inline-block;">3D</span> Commercial</a></li>
+      <li><a href="#reel"><span class="nb">3D</span> Commercial</a></li>
       <li><a href="#work">Portfolio</a></li>
       <li><a href="#services">Expertise</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-actions">
-      <button class="btn-pill btn-theme" id="themeBtn"><span class="theme-label">Cinema Mode</span></button>
-      <a href="https://wa.me/201556152510?text=أهلاً%20يا%20يحيى،%20شوفت%20البورتفوليو%20بتاعك" target="_blank" class="btn-pill btn-wa-nav">WhatsApp</a>
+      <button class="btn-pill btn-theme" id="themeBtn" aria-label="Toggle Cinema Mode"><span class="theme-label">Cinema Mode</span></button>
+      <a href="https://wa.me/201556152510?text=أهلاً%20يا%20يحيى،%20شوفت%20البورتفوليو%20بتاعك" target="_blank" rel="noopener noreferrer" class="btn-pill btn-wa-nav">WhatsApp</a>
       <a href="https://www.instagram.com/yahia_zaki0?psln=MTUyeHdsd2xwaGQzNw==" target="_blank" rel="noopener noreferrer" class="btn-icon-circle" aria-label="Instagram (@yahia_zaki0)">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
       </a>
@@ -620,45 +606,18 @@
   </nav>
 
   <main>
-    <section class="hero container" style="position:relative;">
-      <div class="yz-logo-wrap hero-logo-corner">
-        <svg class="yz-svg" width="150" height="120" viewBox="0 0 185 145" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g class="yz-shadow-layer yz-pop" transform="translate(5,5)">
-            <path d="M138 18 L156 18 L156 32 L114 96" stroke="var(--logo-blue)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M136 30 L92 98 L82 124 L106 110 L146 46" fill="var(--logo-blue)" opacity="0.7"/>
-            <polygon points="140,98 170,118 140,138" fill="var(--logo-blue)"/>
-          </g>
-          <path class="yz-draw" d="M20 18 L35 18 L61 57 L87 18 L102 18 L68 72 L68 124 L54 124 L54 72 Z" stroke="var(--logo-sage)" stroke-width="4.5" stroke-linejoin="round" fill="none"/>
-          <g class="yz-pop" stroke="var(--logo-sage)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
-            <path class="yz-code-left" d="M51 22 L44 28 L51 34"/>
-            <path class="yz-code-slash" d="M64 20 L58 36"/>
-            <path class="yz-code-right" d="M71 22 L78 28 L71 34"/>
-          </g>
-          <path class="yz-draw yz-draw-delay" d="M107 18 L156 18 L156 31 L114 95" stroke="var(--logo-sage)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path class="yz-draw yz-draw-delay" d="M97 111 L138 111 M88 124 L138 124" stroke="var(--logo-sage)" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-          <g class="yz-pen-group yz-draw yz-draw-delay" stroke="var(--logo-ink)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
-            <path d="M104 31 L138 31 L109 76 L94 67 Z"/>
-            <path d="M92 70 L110 81 L106 87 L88 76 Z" fill="var(--logo-ink)"/>
-            <path d="M88 78 L106 89 L101 108 L80 124 L84 98 Z" fill="var(--bg-paper, #F1F0EA)"/>
-            <line x1="80" y1="124" x2="92" y2="103"/>
-            <circle cx="94" cy="100" r="2.5"/>
-          </g>
-          <g class="yz-arrow-head yz-pop">
-            <polygon points="138,98 168,118 138,138" fill="var(--bg-paper, #F1F0EA)" stroke="var(--logo-ink)" stroke-width="4.2" stroke-linejoin="round"/>
-          </g>
-        </svg>
-      </div>
+    <section class="hero container">
       <div class="status-pill gs-up">
         <span class="dot-live"></span>
-        Creative Technologist • CGI, Motion & Web
+        Creative Technologist • CGI, Motion &amp; Web
       </div>
       <h1 class="gs-up">
-        Designing <span class="text-sage"><span dir="ltr" style="display:inline-block;">3D</span> Visuals</span>,<br>
-        Websites & <span class="text-under-blue">Commercial Ads</span><br>
+        Designing <span class="text-sage"><span class="nb">3D</span> Visuals</span>,<br>
+        Websites &amp; Commercial Ads<br>
         That Convert.
       </h1>
       <p class="hero-desc gs-up">
-        أنا <strong>يحيى زكي (Yahia Zaki)</strong> — بدمج بين التصميم الإبداعي، الـ <span dir="ltr" style="display:inline-block;">3D</span> CGI، المواقع التفاعلية، ومونتاج الإعلانات عشان أطلع شغل بصري يرفع قيمة البراند ويحقق مبيعات حقيقية.
+        أنا <strong>يحيى زكي (<span dir="ltr" style="display:inline-block;">Yahia Zaki</span>)</strong> — بدمج بين التصميم الإبداعي، الـ <span dir="ltr" style="display:inline-block;">3D CGI</span>، المواقع التفاعلية، ومونتاج الإعلانات عشان أطلع شغل بصري يرفع قيمة البراند ويحقق مبيعات حقيقية.
       </p>
       <div class="hero-cta-row gs-up">
         <a href="#work" class="btn-primary">Explore Selected Work &rarr;</a>
@@ -666,10 +625,10 @@
       </div>
 
       <div class="stats-strip gs-up">
-        <div class="stat-item"><h3><span class="nb">3D</span> + CGI</h3><p>Product Visuals & Fluid Motion</p></div>
+        <div class="stat-item"><h3><span class="nb">3D</span> + CGI</h3><p>Product Visuals &amp; Fluid Motion</p></div>
         <div class="stat-item"><h3>Ads</h3><p>High-Retention Commercial Reels</p></div>
-        <div class="stat-item"><h3>Web <span class="nb">3D</span></h3><p>Interactive GSAP & Three.js</p></div>
-        <div class="stat-item"><h3>Branding</h3><p>Logos & Campaign Direction</p></div>
+        <div class="stat-item"><h3>Web <span class="nb">3D</span></h3><p>Interactive GSAP &amp; Three.js</p></div>
+        <div class="stat-item"><h3>Branding</h3><p>Logos &amp; Campaign Direction</p></div>
       </div>
     </section>
 
@@ -678,11 +637,11 @@
         <span><span class="nb">3D</span> Product Commercials</span><span class="sep">&bull;</span>
         <span>Luxury Key Visuals</span><span class="sep">&bull;</span>
         <span>Interactive <span class="nb">3D</span> Websites</span><span class="sep">&bull;</span>
-        <span>Brand Identity & Logos</span><span class="sep">&bull;</span>
+        <span>Brand Identity &amp; Logos</span><span class="sep">&bull;</span>
         <span><span class="nb">3D</span> Product Commercials</span><span class="sep">&bull;</span>
         <span>Luxury Key Visuals</span><span class="sep">&bull;</span>
         <span>Interactive <span class="nb">3D</span> Websites</span><span class="sep">&bull;</span>
-        <span>Brand Identity & Logos</span><span class="sep">&bull;</span>
+        <span>Brand Identity &amp; Logos</span><span class="sep">&bull;</span>
       </div>
     </div>
 
@@ -701,17 +660,17 @@
         </div>
 
         <div class="reel-details">
-          <h3>Motion Storytelling & Seamless Scene Transition</h3>
+          <h3>Motion Storytelling &amp; Seamless Scene Transition</h3>
           <p>
             إعلان تجاري ثلاثي الأبعاد يبدأ من ستوديو باستيل مع دوامة شوكولاتة ديناميكية وتايبوجرافي متحرك، وينتقل بسلاسة تامة إلى مشهد كافيه دافئ بإضاءة طبيعية وتناثر حبوب القهوة.
           </p>
           <div class="tag-list">
             <span class="tech-tag"><span class="nb">3D</span> CGI Animation</span>
-            <span class="tech-tag">Fluid & Splash Sim</span>
+            <span class="tech-tag">Fluid &amp; Splash Sim</span>
             <span class="tech-tag">Kinetic Typography</span>
             <span class="tech-tag">Commercial Pacing</span>
           </div>
-          <a href="https://wa.me/201556152510?text=أهلاً%20يا%20يحيى،%20عجبني%20إعلان%20ستاربكس%20الـ%203D" target="_blank" class="btn-primary">
+          <a href="https://wa.me/201556152510?text=أهلاً%20يا%20يحيى،%20عجبني%20إعلان%20ستاربكس%20الـ%203D" target="_blank" rel="noopener noreferrer" class="btn-primary">
             اطلب إعلان مشابه &rarr;
           </a>
         </div>
@@ -723,7 +682,7 @@
       <div class="sec-header">
         <div>
           <span class="sec-tag">// Selected Works (06)</span>
-          <h2 class="sec-title">Projects & Visuals</h2>
+          <h2 class="sec-title">Projects &amp; Visuals</h2>
         </div>
         <div class="filter-bar">
           <button class="filter-btn active" data-filter="all">All (6)</button>
@@ -742,8 +701,8 @@
           data-type="image" data-src="assets/serum-skincare.jpg">
           <div class="work-media">
             <span class="work-badge">Luxury CGI</span>
-            <img loading="lazy" decoding="async" src="assets/serum-skincare.jpg" alt="SERUM Advanced Skin Science" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-</div>
+            <img loading="lazy" decoding="async" src="assets/serum-skincare.jpg" alt="SERUM Advanced Skin Science">
+          </div>
           <div class="work-body">
             <h3>SERUM — Skin Science</h3>
             <p>إخراج فني فاخر بمحاكاة سوائل كريمية على حجر طبيعي وظلال دافية.</p>
@@ -759,8 +718,8 @@
           data-type="image" data-src="assets/abu-auf-coffee.jpg">
           <div class="work-media">
             <span class="work-badge">Product CGI</span>
-            <img loading="lazy" decoding="async" src="assets/abu-auf-coffee.jpg" alt="Abu Auf Coffee" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-</div>
+            <img loading="lazy" decoding="async" src="assets/abu-auf-coffee.jpg" alt="Abu Auf Coffee">
+          </div>
           <div class="work-body">
             <h3>Abu Auf — Turkish Coffee</h3>
             <p>بوستر إعلاني <span dir="ltr" style="display:inline-block;">3D</span> بإضاءة درامية، حبوب بن طايرة وسبلاش قهوة احترافي.</p>
@@ -776,11 +735,11 @@
           data-type="image" data-src="assets/airmax-reconstructed.png">
           <div class="work-media">
             <span class="work-badge">Campaign Key Visual</span>
-            <img loading="lazy" decoding="async" src="assets/airmax-reconstructed.png" alt="Nike Air Max 95 Reconstructed" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-</div>
+            <img loading="lazy" decoding="async" src="assets/airmax-reconstructed.png" alt="Nike Air Max 95 Reconstructed">
+          </div>
           <div class="work-body">
             <h3>Air Max 95 — Reconstructed</h3>
-            <p>تصميم تفكيكي مع Wireframe <span dir="ltr" style="display:inline-block;">3D</span> ومؤثرات سبلاش وشرارات سينمائية.</p>
+            <p>تصميم تفكيكي مع <span dir="ltr" style="display:inline-block;">Wireframe 3D</span> ومؤثرات سبلاش وشرارات سينمائية.</p>
             <span class="work-more">Inspect Project &rarr;</span>
           </div>
         </article>
@@ -793,8 +752,8 @@
           data-type="image" data-src="assets/airmax-crystal.png">
           <div class="work-media">
             <span class="work-badge">Product Visual</span>
-            <img loading="lazy" decoding="async" src="assets/airmax-crystal.png" alt="Nike Air Max 95 Crystal" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-</div>
+            <img loading="lazy" decoding="async" src="assets/airmax-crystal.png" alt="Nike Air Max 95 Crystal">
+          </div>
           <div class="work-body">
             <h3>Air Max 95 — Crystal Edition</h3>
             <p>تكوين ستوديو نظيف بشظايا زجاجية وإضاءة حمراء مزدوجة.</p>
@@ -810,8 +769,8 @@
           data-type="video" data-src="assets/starbucks-choco.mp4">
           <div class="work-media">
             <span class="work-badge"><span class="nb">3D</span> Commercial Ad</span>
-            <video src="assets/starbucks-choco.mp4" muted loop playsinline autoplay controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-</div>
+            <video src="assets/starbucks-choco.mp4" muted loop playsinline autoplay controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;"></video>
+          </div>
           <div class="work-body">
             <h3>Starbucks — Choco Ad</h3>
             <p>إعلان فيديو <span dir="ltr" style="display:inline-block;">3D</span> احترافي بحركة سوائل وانتقال مشاهد سينمائي.</p>
@@ -826,12 +785,12 @@
           data-desc="تصميم شعار وهوية فريق Osprey للرياضات الإلكترونية، يدمج بين شكل النسر وحروف OS على هيئة أجنحة هندسية باللونين السيان والأسود."
           data-type="image" data-src="assets/osprey-esports.png">
           <div class="work-media">
-            <span class="work-badge">Logo & Identity</span>
-            <img loading="lazy" decoding="async" src="assets/osprey-esports.png" alt="Osprey E-Sports Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-</div>
+            <span class="work-badge">Logo &amp; Identity</span>
+            <img loading="lazy" decoding="async" src="assets/osprey-esports.png" alt="Osprey E-Sports Logo">
+          </div>
           <div class="work-body">
             <h3>Osprey E-Sports</h3>
-            <p>تصميم لوجو جيمنج هندسي بدمج النسر مع مونوغرام OS.</p>
+            <p>تصميم لوجو جيمنج هندسي بدمج النسر مع مونوغرام <span dir="ltr" style="display:inline-block;">OS</span>.</p>
             <span class="work-more">Inspect Project &rarr;</span>
           </div>
         </article>
@@ -849,22 +808,22 @@
       <div class="services-grid">
         <div class="service-card">
           <div class="srv-num">01</div>
-          <h3>Commercial Ads & Montage</h3>
+          <h3>Commercial Ads &amp; Montage</h3>
           <p>إعلانات سوشيال ميديا ومونتاج احترافي بإيقاع سريع وتصميم <span dir="ltr" style="display:inline-block;">3D</span> يخطف العين ويحقق مبيعات.</p>
         </div>
         <div class="service-card">
           <div class="srv-num">02</div>
-          <h3>Product CGI & Key Visuals</h3>
+          <h3>Product CGI &amp; Key Visuals</h3>
           <p>تصميم بوسترات منتجات بتقنيات الدمج والإضاءة السينمائية تبرز جودة البراند.</p>
         </div>
         <div class="service-card">
           <div class="srv-num">03</div>
           <h3><span class="nb">3D</span> Websites &amp; UI/UX</h3>
-          <p>مواقع ويب حديثة بحركات GSAP و Three.js سريعة وتشتغل بسلاسة على الموبايل والكمبيوتر.</p>
+          <p>مواقع ويب حديثة بحركات <span dir="ltr" style="display:inline-block;">GSAP</span> و <span dir="ltr" style="display:inline-block;">Three.js</span> سريعة وتشتغل بسلاسة على الموبايل والكمبيوتر.</p>
         </div>
         <div class="service-card">
           <div class="srv-num">04</div>
-          <h3>Brand Identity & Logos</h3>
+          <h3>Brand Identity &amp; Logos</h3>
           <p>تصميم شعارات وهويات بصرية متكاملة تناسب الشركات، المتاجر، وفرق الجيمنج.</p>
         </div>
       </div>
@@ -875,7 +834,7 @@
         <h2>Let's Build Your Next Big Project.</h2>
         <p>جاهز نشتغل على إعلانك الجاي، موقعك، أو هوية براندك؟ كلمني مباشرة على الواتساب وهنبدأ فوراً.</p>
         <div class="cta-actions">
-          <a href="https://wa.me/201556152510?text=أهلاً%20يا%20يحيى،%20عايز%20أستفسر%20عن%20عمل%20مشروع%20معاك" target="_blank" class="cta-btn-wa">
+          <a href="https://wa.me/201556152510?text=أهلاً%20يا%20يحيى،%20عايز%20أستفسر%20عن%20عمل%20مشروع%20معاك" target="_blank" rel="noopener noreferrer" class="cta-btn-wa">
             Chat on WhatsApp (+201556152510) &rarr;
           </a>
           <a href="https://www.instagram.com/yahia_zaki0?psln=MTUyeHdsd2xwaGQzNw==" target="_blank" rel="noopener noreferrer" class="cta-btn-ig">
@@ -898,21 +857,21 @@
         WhatsApp (+201556152510)
       </a>
     </div>
-    &copy; 2026 YAHIA ZAKI — Creative Technologist. Designed & Engineered with <span class="nb">3D</span> Motion.
+    &copy; 2026 YAHIA ZAKI — Creative Technologist. Designed &amp; Engineered with <span class="nb">3D</span> Motion.
   </footer>
 
-  <a href="https://wa.me/201556152510?text=أهلاً%20يا%20يحيى،%20شوفت%20موقعك%20وحابب%20نتواصل" target="_blank" class="wa-float">
+  <a href="https://wa.me/201556152510?text=أهلاً%20يا%20يحيى،%20شوفت%20موقعك%20وحابب%20نتواصل" target="_blank" rel="noopener noreferrer" class="wa-float">
     &#9993; WhatsApp
   </a>
 
   <div class="modal" id="projectModal">
     <div class="modal-box">
-      <button class="modal-close" id="modalClose">&times;</button>
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
       <span class="sec-tag" id="modalRole"></span>
       <h2 style="font-family:'Syne',sans-serif; font-size:1.8rem;" id="modalTitle"></h2>
       <div class="modal-media-wrap" id="modalMedia"></div>
       <p style="color:var(--text-muted); line-height:1.7; margin-bottom:20px;" id="modalDesc"></p>
-      <a href="https://wa.me/201556152510?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%20%D9%8A%D8%A7%20%D9%8A%D8%AD%D9%8A%D9%89%D8%8C%20%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%A3%D8%B7%D9%84%D8%A8%20%D8%B9%D9%85%D9%84%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9" target="_blank" class="btn-primary">اطلب مشروع مشابه على واتساب &rarr;</a>
+      <a id="modalWaBtn" href="https://wa.me/201556152510" target="_blank" rel="noopener noreferrer" class="btn-primary">اطلب مشروع مشابه على واتساب &rarr;</a>
     </div>
   </div>
 
@@ -921,56 +880,55 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script>
-    // 1. Preloader + entrance animations (do not wait for full media load)
+    // 1. Preloader + Entrance & Smooth Finger-Scroll Animations
     const runIntro = () => {
       const fill = document.querySelector('.loader-fill');
       const pre = document.getElementById('preloader');
       const hidePreloader = () => { if (pre) pre.style.display = 'none'; };
+
       const initScrollAnimations = () => {
         if (typeof ScrollTrigger === 'undefined' || typeof gsap === 'undefined') return;
         ScrollTrigger.config({ ignoreMobileResize: true });
-        const reveal = (selector, trigger, stagger, y = 36) => {
+
+        const revealGroup = (selector, stagger, y) => {
           const els = gsap.utils.toArray(selector);
           if (!els.length) return;
-          if (ScrollTrigger.batch) {
-            ScrollTrigger.batch(els, {
-              start: 'top 88%',
-              once: true,
-              onEnter: batch => gsap.fromTo(batch,
-                { y, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.75, stagger: stagger, ease: 'power2.out', clearProps: 'transform,opacity', overwrite: true }
-              )
-            });
-          } else {
-            gsap.fromTo(els,
-              { y, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.75, stagger: stagger, ease: 'power2.out', clearProps: 'transform,opacity',
-                scrollTrigger: { trigger: trigger || els[0], start: 'top 88%', once: true }
-              }
-            );
-          }
+          gsap.set(els, { y, opacity: 0 });
+          ScrollTrigger.batch(els, {
+            start: 'top 92%',
+            once: true,
+            onEnter: batch => gsap.to(batch, {
+              y: 0, opacity: 1, duration: 0.7, stagger: stagger,
+              ease: 'power3.out', clearProps: 'transform,opacity', overwrite: true
+            })
+          });
         };
-        reveal('.sec-header', null, 0.08, 28);
-        reveal('.reel-grid', '#reel', 0, 34);
-        reveal('.reveal-card', '.work-grid', 0.1, 45);
-        reveal('.service-card', '#services', 0.08, 34);
-        reveal('.cta-panel', '#contact', 0, 28);
+
+        revealGroup('.sec-header', 0.08, 26);
+        revealGroup('.reel-grid', 0, 32);
+        revealGroup('.reveal-card', 0.09, 38);
+        revealGroup('.service-card', 0.08, 30);
+        revealGroup('.cta-panel', 0, 28);
       };
 
       if (typeof gsap !== 'undefined') {
         if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
+        gsap.set('.gs-up', { y: 30, opacity: 0 });
+
         const tl = gsap.timeline();
-        tl.to(fill, { width: '100%', duration: 1.1, ease: 'power2.inOut' }, 0)
-          .to(pre, { yPercent: -100, duration: 0.75, ease: 'power4.inOut' }, 1.15)
+        tl.to(fill, { width: '100%', duration: 1.15, ease: 'power2.inOut' }, 0)
+          .to(pre, { yPercent: -100, duration: 0.75, ease: 'power4.inOut' }, 1.2)
           .set(pre, { display: 'none' }, 1.95)
-          .fromTo('.gs-up', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out', clearProps: 'transform,opacity' }, 1.35)
+          .to('.gs-up', {
+            y: 0, opacity: 1, duration: 0.75, stagger: 0.1,
+            ease: 'power3.out', clearProps: 'transform,opacity'
+          }, 1.38)
           .add(() => {
             initScrollAnimations();
-            if (typeof ScrollTrigger !== 'undefined' && ScrollTrigger.refresh) ScrollTrigger.refresh();
+            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
           }, 1.45);
       } else {
         hidePreloader();
-        document.querySelectorAll('.gs-up').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
       }
     };
 
@@ -983,13 +941,14 @@
       const p = document.getElementById('preloader');
       if (p && p.style.display !== 'none') {
         p.style.display = 'none';
-        document.querySelectorAll('.gs-up').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+        document.querySelectorAll('.gs-up, .sec-header, .reel-grid, .reveal-card, .service-card, .cta-panel').forEach(el => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
       }
-    }, 2800);
+    }, 3200);
 
-    // Production: media loads directly from assets/
-
-    // 2. Three.js 3D Scene
+    // 2. Smooth Scroll-Driven Three.js 3D Scene
     if (typeof THREE !== 'undefined') {
       const canvas = document.getElementById('webgl-bg');
       const scene = new THREE.Scene();
@@ -1006,19 +965,19 @@
 
       const shell = new THREE.Mesh(
         new THREE.IcosahedronGeometry(2.15, 1),
-        new THREE.MeshBasicMaterial({ color: 0x7C9373, wireframe: true, transparent: true, opacity: isMobile3D ? 0.22 : 0.4 })
+        new THREE.MeshBasicMaterial({ color: 0x7C9373, wireframe: true, transparent: true, opacity: isMobile3D ? 0.2 : 0.4 })
       );
       rig.add(shell);
 
       const core = new THREE.Mesh(
         new THREE.TorusKnotGeometry(0.92, 0.26, 96, 14),
-        new THREE.MeshBasicMaterial({ color: 0x98C1E1, wireframe: true, transparent: true, opacity: isMobile3D ? 0.28 : 0.55 })
+        new THREE.MeshBasicMaterial({ color: 0x98C1E1, wireframe: true, transparent: true, opacity: isMobile3D ? 0.25 : 0.55 })
       );
       rig.add(core);
 
       const orbitRing = new THREE.Mesh(
         new THREE.TorusGeometry(2.8, 0.025, 16, 100),
-        new THREE.MeshBasicMaterial({ color: 0x7C9373, transparent: true, opacity: isMobile3D ? 0.2 : 0.45 })
+        new THREE.MeshBasicMaterial({ color: 0x7C9373, transparent: true, opacity: isMobile3D ? 0.18 : 0.45 })
       );
       orbitRing.rotation.x = Math.PI / 3;
       rig.add(orbitRing);
@@ -1028,13 +987,13 @@
       for (let i = 0; i < pts.length; i++) pts[i] = (Math.random() - 0.5) * 18;
       const pGeo = new THREE.BufferGeometry();
       pGeo.setAttribute('position', new THREE.BufferAttribute(pts, 3));
-      const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ size: 0.06, color: 0x7C9373, transparent: true, opacity: 0.6 }));
+      const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ size: 0.06, color: 0x7C9373, transparent: true, opacity: isMobile3D ? 0.4 : 0.6 }));
       scene.add(particles);
 
       function positionRig() {
         if (window.innerWidth < 768) {
-          rig.scale.setScalar(0.56);
-          rig.position.set(0, 0.15, -1.5);
+          rig.scale.setScalar(0.55);
+          rig.position.set(0, 0.15, -1.6);
         } else {
           rig.scale.setScalar(1);
           rig.position.set(2.5, 0.1, 0);
@@ -1043,10 +1002,13 @@
       positionRig();
 
       let mx = 0, my = 0;
-      window.addEventListener('mousemove', e => {
-        mx = (e.clientX / window.innerWidth - 0.5) * 2;
-        my = (e.clientY / window.innerHeight - 0.5) * 2;
-      });
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        window.addEventListener('mousemove', e => {
+          mx = (e.clientX / window.innerWidth - 0.5) * 2;
+          my = (e.clientY / window.innerHeight - 0.5) * 2;
+        }, { passive: true });
+      }
+
       let lastW = window.innerWidth, lastH = window.innerHeight;
       window.addEventListener('resize', () => {
         const w = window.innerWidth, h = window.innerHeight;
@@ -1065,6 +1027,7 @@
         const targetScroll = window.scrollY / (document.body.scrollHeight - window.innerHeight || 1);
         smoothScroll += (targetScroll - smoothScroll) * 0.07;
         const scroll = smoothScroll;
+
         if (window.innerWidth < 768) {
           rig.position.y = 0.15;
           rig.position.x = 0;
@@ -1072,23 +1035,25 @@
           rig.position.y = 0.1 + Math.sin(scroll * Math.PI * 2) * 0.8;
           rig.position.x = 2.5 - scroll * 4.5;
         }
+
         shell.rotation.y = t * 0.16 + mx * 0.45 + scroll * 4;
         shell.rotation.x = t * 0.1 + my * 0.35;
         core.rotation.y = -t * 0.28 + scroll * 6;
         orbitRing.rotation.z = t * 0.25;
         particles.rotation.y = t * 0.03 + mx * 0.08;
+
         renderer.render(scene, camera);
         requestAnimationFrame(tick);
       }
       tick();
     }
 
-    // 3. Cursor & 3D Tilt (fine pointer only)
+    // 3. Desktop-Only Cursor & 3D Tilt
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       const dot = document.querySelector('.cursor-dot');
       const ring = document.querySelector('.cursor-ring');
       let cursorShown = false;
-      const onPointerMove = (e) => {
+      window.addEventListener('pointermove', e => {
         if (e.pointerType && e.pointerType !== 'mouse') return;
         if (!cursorShown) {
           cursorShown = true;
@@ -1101,8 +1066,8 @@
         }
         dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
         ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
-      };
-      window.addEventListener('pointermove', onPointerMove, { passive: true });
+      }, { passive: true });
+
       function bindTilt(el, strength = 12) {
         if (!el) return;
         el.addEventListener('mousemove', e => {
@@ -1127,8 +1092,11 @@
       b.classList.add('active');
       const cat = b.dataset.filter;
       wCards.forEach(c => {
-        c.style.display = (cat === 'all' || c.dataset.category === cat) ? 'flex' : 'none';
+        const show = (cat === 'all' || c.dataset.category === cat);
+        c.style.display = show ? 'flex' : 'none';
+        if (show) { c.style.opacity = '1'; c.style.transform = 'none'; }
       });
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
     }));
 
     const themeBtn = document.getElementById('themeBtn');
@@ -1144,17 +1112,21 @@
     // 5. Lightbox Modal
     const modal = document.getElementById('projectModal');
     const mMedia = document.getElementById('modalMedia');
+    const mWaBtn = document.getElementById('modalWaBtn');
     function closeModal() { modal.classList.remove('open'); mMedia.innerHTML = ''; }
 
     wCards.forEach(card => card.addEventListener('click', () => {
-      document.getElementById('modalTitle').textContent = card.dataset.title;
+      const title = card.dataset.title;
+      document.getElementById('modalTitle').textContent = title;
       document.getElementById('modalRole').textContent = card.dataset.role;
       document.getElementById('modalDesc').textContent = card.dataset.desc;
+      mWaBtn.href = `https://wa.me/201556152510?text=${encodeURIComponent('أهلاً يا يحيى، شوفت مشروع "' + title + '" وعجبني وعايز أطلب عمل مشابه')}`;
       mMedia.innerHTML = '';
 
       if (card.dataset.type === 'image') {
         const img = document.createElement('img');
         img.src = card.dataset.src;
+        img.alt = title;
         mMedia.appendChild(img);
       } else if (card.dataset.type === 'video') {
         const vid = document.createElement('video');
@@ -1173,20 +1145,22 @@
     modal.onclick = e => { if (e.target === modal) closeModal(); };
     window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    // Interactive SVG logo shadow parallax
-    document.querySelectorAll('.yz-logo-wrap').forEach(wrap => {
-      wrap.addEventListener('mousemove', e => {
-        const r = wrap.getBoundingClientRect();
-        const dx = ((e.clientX - r.left) / r.width - 0.5) * 8;
-        const dy = ((e.clientY - r.top) / r.height - 0.5) * 8;
-        const shadow = wrap.querySelector('.yz-shadow-layer');
-        if (shadow) shadow.style.transform = `translate(${5 - dx}px, ${5 - dy}px)`;
+    // 6. Interactive SVG Logo Shadow Parallax (Desktop)
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      document.querySelectorAll('.yz-logo-wrap').forEach(wrap => {
+        wrap.addEventListener('mousemove', e => {
+          const r = wrap.getBoundingClientRect();
+          const dx = ((e.clientX - r.left) / r.width - 0.5) * 8;
+          const dy = ((e.clientY - r.top) / r.height - 0.5) * 8;
+          const shadow = wrap.querySelector('.yz-shadow-layer');
+          if (shadow) shadow.style.transform = `translate(${5 - dx}px, ${5 - dy}px)`;
+        });
+        wrap.addEventListener('mouseleave', () => {
+          const shadow = wrap.querySelector('.yz-shadow-layer');
+          if (shadow) shadow.style.transform = '';
+        });
       });
-      wrap.addEventListener('mouseleave', () => {
-        const shadow = wrap.querySelector('.yz-shadow-layer');
-        if (shadow) shadow.style.transform = '';
-      });
-    });
+    }
   </script>
 </body>
 </html>
