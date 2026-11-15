@@ -5,3 +5,4 @@ dist/
 .vercel/
 tmp-update.json
 *.log
+.vercel

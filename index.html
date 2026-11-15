@@ -96,13 +96,13 @@
     @media (max-width: 900px) { .hero-logo-corner { display:none; } }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
 
     body {
       background: var(--bg-paper);
       color: var(--text-charcoal);
       font-family: 'Space Grotesk', 'Cairo', sans-serif;
-      overflow-x: hidden;
+      overflow-x: clip;
       transition: background-color 0.45s ease, color 0.45s ease;
     }
 
@@ -146,6 +146,7 @@
       color: var(--text-charcoal); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
     }
     .brand img { height: 30px; width: auto; border-radius: 6px; }
+    .nav-brand-text { display: flex; flex-direction: column; line-height: 1.1; }
     .nav-links { display: flex; gap: 26px; list-style: none; }
     .nav-links a {
       text-decoration: none; color: var(--text-charcoal); font-size: 0.9rem; font-weight: 500; transition: color 0.25s;
@@ -172,7 +173,7 @@
     .container { width: min(1200px, 90%); margin: 0 auto; }
 
     .hero {
-      min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 112px 0 60px;
+      min-height: 92svh; display: flex; flex-direction: column; justify-content: center; padding: 112px 0 60px;
     }
     .status-pill {
       display: inline-flex; align-items: center; gap: 9px; width: fit-content;
@@ -393,8 +394,9 @@
     }
     .modal-close {
       position: sticky; top: 0; float: right; background: var(--bg-surface);
-      border: 1px solid var(--border); width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid var(--border); width: 42px; height: 42px; border-radius: 50%;
       font-size: 1.4rem; cursor: pointer; color: var(--text-charcoal);
+      display: inline-flex; align-items: center; justify-content: center;
     }
     .modal-media-wrap {
       margin: 18px 0; border-radius: 16px; overflow: hidden; background: #131618;
@@ -404,7 +406,7 @@
       max-width: 100%; max-height: 460px; object-fit: contain;
     }
 
-    footer { text-align: center; padding: 24px 20px 60px; color: var(--text-muted); font-size: 0.88rem; position: relative; z-index: 2; }
+    footer { text-align: center; padding: 24px 20px 88px; color: var(--text-muted); font-size: 0.88rem; position: relative; z-index: 2; }
     .footer-links {
       display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 22px; margin-bottom: 14px;
     }
@@ -413,6 +415,35 @@
       display: inline-flex; align-items: center; gap: 8px; transition: color 0.25s;
     }
     .footer-links a:hover { color: var(--sage-green); }
+    @media (max-width: 900px) { .hero-logo-corner { display:none; } }
+
+    @media (max-width: 768px) {
+      .reel-grid, .cta-panel { box-shadow: 6px 6px 0 var(--shadow-hard); }
+      .cta-panel { box-shadow: 6px 6px 0 var(--sage-green); }
+      .work-card:hover { box-shadow: 6px 6px 0 var(--shadow-hard); }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .wa-float { bottom: 14px; right: 14px; padding: 10px 16px; }
+      .video-3d-frame { max-height: none; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 8px 12px; gap: 8px; }
+      .brand { gap: 8px; }
+      nav .yz-svg { width: 38px; height: auto; }
+      .nav-actions { gap: 6px; }
+      .nav-actions .btn-pill, .nav-actions .btn-theme, .nav-actions .btn-wa-nav {
+        padding: 6px 12px; font-size: 0.76rem;
+      }
+      .nav-actions .btn-icon-circle { width: 34px; height: 34px; }
+      .work-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 104px; }
+      .modal-box { padding: 20px; }
+    }
+
+    @media (max-width: 440px) {
+      .brand-subtitle { display: none; }
+      .nav-actions .btn-wa-nav { padding: 6px 10px; }
+    }
   </style>
 </head>
 <body>
@@ -490,9 +521,9 @@
           <polygon points="138,98 168,118 138,138" fill="var(--bg-paper, #F1F0EA)" stroke="var(--logo-ink)" stroke-width="4.2" stroke-linejoin="round"/>
         </g>
       </svg>
-      <div style="display:flex; flex-direction:column; line-height:1.1;">
+      <div class="nav-brand-text">
         <span style="font-family:'Syne',sans-serif; font-weight:800; letter-spacing:0.06em; font-size:1rem;">YAHIA ZAKI</span>
-        <span style="font-size:0.56rem; letter-spacing:0.22em; color:var(--text-muted); font-weight:600;">CREATIVE TECHNOLOGIST</span>
+        <span class="brand-subtitle" style="font-size:0.56rem; letter-spacing:0.22em; color:var(--text-muted); font-weight:600;">CREATIVE TECHNOLOGIST</span>
       </div>
     </a>
     <ul class="nav-links">
@@ -633,7 +664,7 @@
           data-type="image" data-src="assets/serum-skincare.jpg">
           <div class="work-media">
             <span class="work-badge">Luxury CGI</span>
-            <img src="assets/serum-skincare.jpg" alt="SERUM Advanced Skin Science" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img loading="lazy" decoding="async" src="assets/serum-skincare.jpg" alt="SERUM Advanced Skin Science" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
 </div>
           <div class="work-body">
             <h3>SERUM — Skin Science</h3>
@@ -650,7 +681,7 @@
           data-type="image" data-src="assets/abu-auf-coffee.jpg">
           <div class="work-media">
             <span class="work-badge">Product CGI</span>
-            <img src="assets/abu-auf-coffee.jpg" alt="Abu Auf Coffee" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img loading="lazy" decoding="async" src="assets/abu-auf-coffee.jpg" alt="Abu Auf Coffee" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
 </div>
           <div class="work-body">
             <h3>Abu Auf — Turkish Coffee</h3>
@@ -667,7 +698,7 @@
           data-type="image" data-src="assets/airmax-reconstructed.png">
           <div class="work-media">
             <span class="work-badge">Campaign Key Visual</span>
-            <img src="assets/airmax-reconstructed.png" alt="Nike Air Max 95 Reconstructed" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img loading="lazy" decoding="async" src="assets/airmax-reconstructed.png" alt="Nike Air Max 95 Reconstructed" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
 </div>
           <div class="work-body">
             <h3>Air Max 95 — Reconstructed</h3>
@@ -684,7 +715,7 @@
           data-type="image" data-src="assets/airmax-crystal.png">
           <div class="work-media">
             <span class="work-badge">Product Visual</span>
-            <img src="assets/airmax-crystal.png" alt="Nike Air Max 95 Crystal" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img loading="lazy" decoding="async" src="assets/airmax-crystal.png" alt="Nike Air Max 95 Crystal" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
 </div>
           <div class="work-body">
             <h3>Air Max 95 — Crystal Edition</h3>
@@ -718,7 +749,7 @@
           data-type="image" data-src="assets/osprey-esports.png">
           <div class="work-media">
             <span class="work-badge">Logo & Identity</span>
-            <img src="assets/osprey-esports.png" alt="Osprey E-Sports Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img loading="lazy" decoding="async" src="assets/osprey-esports.png" alt="Osprey E-Sports Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
 </div>
           <div class="work-body">
             <h3>Osprey E-Sports</h3>
@@ -911,27 +942,30 @@
       tick();
     }
 
-    // 3. Cursor & 3D Tilt
-    const dot = document.querySelector('.cursor-dot');
-    const ring = document.querySelector('.cursor-ring');
-    window.addEventListener('mousemove', e => {
-      dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
-      ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
-    });
+    // 3. Cursor & 3D Tilt (fine pointer only)
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const dot = document.querySelector('.cursor-dot');
+      const ring = document.querySelector('.cursor-ring');
+      window.addEventListener('mousemove', e => {
+        dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
+        ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
+      });
 
-    function bindTilt(el, strength = 12) {
-      el.addEventListener('mousemove', e => {
-        const r = el.getBoundingClientRect();
-        const rx = ((e.clientY - r.top) / r.height - 0.5) * -strength;
-        const ry = ((e.clientX - r.left) / r.width - 0.5) * strength;
-        el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.015)`;
-      });
-      el.addEventListener('mouseleave', () => {
-        el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-      });
+      function bindTilt(el, strength = 12) {
+        if (!el) return;
+        el.addEventListener('mousemove', e => {
+          const r = el.getBoundingClientRect();
+          const rx = ((e.clientY - r.top) / r.height - 0.5) * -strength;
+          const ry = ((e.clientX - r.left) / r.width - 0.5) * strength;
+          el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.015)`;
+        });
+        el.addEventListener('mouseleave', () => {
+          el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        });
+      }
+      document.querySelectorAll('.work-card').forEach(c => bindTilt(c, 12));
+      bindTilt(document.getElementById('tiltStage'), 8);
     }
-    document.querySelectorAll('.work-card').forEach(c => bindTilt(c, 12));
-    bindTilt(document.getElementById('tiltStage'), 8);
 
     // 4. Filter & Cinema Mode
     const fBtns = document.querySelectorAll('.filter-btn');
