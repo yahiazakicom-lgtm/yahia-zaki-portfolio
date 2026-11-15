@@ -1,0 +1,7 @@
+﻿deploy-yahia.zip
+node_modules/
+dist/
+.netlify/
+.vercel/
+tmp-update.json
+*.log
