@@ -139,14 +139,14 @@
       width: 38px; height: 38px; border: 1.5px solid var(--sky-blue);
       transition: transform 0.08s ease-out;
     }
-    @media (max-width: 768px) { .cursor-dot, .cursor-ring { display: none; } }
-
-    #preloader {
-      position: fixed; inset: 0; background: #F1F0EA; z-index: 10001;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    @media (max-width: 768px) {
+      .reel-grid, .cta-panel { box-shadow: 6px 6px 0 var(--shadow-hard); }
+      .cta-panel { box-shadow: 6px 6px 0 var(--sage-green); }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .wa-float { bottom: 14px; right: 14px; padding: 10px 16px; }
+      .video-3d-frame { height: auto; aspect-ratio: auto; max-height: none; }
+      .video-3d-frame video { width: 100%; height: auto; object-fit: contain; }
     }
-    .loader-track { width: 210px; height: 3px; background: rgba(65,71,76,0.12); border-radius: 4px; overflow: hidden; }
-    .loader-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #7C9373, #98C1E1); }
 
     #webgl-bg {
       position: fixed; inset: 0; width: 100%; height: 100%;
@@ -286,6 +286,16 @@
       box-shadow: 0 24px 48px rgba(0,0,0,0.22);
     }
     .video-3d-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    video:fullscreen,
+    video:-webkit-full-screen {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      background: #000 !important;
+    }
     .video-fallback-note {
       position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
       justify-content: center; text-align: center; padding: 24px; color: #F1F0EA; gap: 14px;
@@ -453,6 +463,9 @@
     }
     .modal-media-wrap img, .modal-media-wrap video {
       max-width: 100%; max-height: 460px; object-fit: contain;
+    }
+    .modal-media-wrap video {
+      width: 100%; height: auto; max-height: 72svh; object-fit: contain;
     }
 
     footer { text-align: center; padding: 24px 20px 88px; color: var(--text-muted); font-size: 0.88rem; position: relative; z-index: 2; }
@@ -680,7 +693,7 @@
 
       <div class="reel-grid">
         <div class="video-3d-frame" id="tiltStage">
-          <video id="featuredVideo" src="assets/starbucks-choco.mp4" autoplay muted loop playsinline controls></video>
+          <video id="featuredVideo" src="assets/starbucks-choco.mp4" autoplay muted loop playsinline controls controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;"></video>
         </div>
 
         <div class="reel-details">
@@ -793,7 +806,7 @@
           data-type="video" data-src="assets/starbucks-choco.mp4">
           <div class="work-media">
             <span class="work-badge"><span class="nb">3D</span> Commercial Ad</span>
-            <video src="assets/starbucks-choco.mp4" muted loop playsinline autoplay onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+            <video src="assets/starbucks-choco.mp4" muted loop playsinline autoplay controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
 </div>
           <div class="work-body">
             <h3>Starbucks — Choco Ad</h3>
@@ -1068,7 +1081,12 @@
       } else if (card.dataset.type === 'video') {
         const vid = document.createElement('video');
         vid.src = card.dataset.src;
-        vid.controls = true; vid.autoplay = true;
+        vid.controls = true;
+        vid.autoplay = true;
+        vid.setAttribute('playsinline', '');
+        vid.setAttribute('controlsList', 'nodownload');
+        vid.disablePictureInPicture = true;
+        vid.addEventListener('contextmenu', e => e.preventDefault());
         mMedia.appendChild(vid);
       }
       modal.classList.add('open');
